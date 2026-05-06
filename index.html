@@ -36,9 +36,9 @@
       --accent-deep: #b8895a;
       --signal: #8eb89a;       /* muted sage green */
       --danger: #e08989;
-      --grid: rgba(244, 237, 224, 0.025);
-      --gradient-1: radial-gradient(circle at 20% 0%, rgba(212, 165, 116, 0.07), transparent 55%);
-      --gradient-2: radial-gradient(circle at 85% 35%, rgba(142, 184, 154, 0.04), transparent 65%);
+      --grid: rgba(255, 255, 255, 0.022);
+      --gradient-1: radial-gradient(circle at 20% 0%, rgba(212, 165, 116, 0.05), transparent 55%);
+      --gradient-2: radial-gradient(circle at 85% 35%, rgba(255, 255, 255, 0.025), transparent 65%);
       --serif: 'Fraunces', 'Times New Roman', serif;
       --sans: 'Geist', system-ui, -apple-system, sans-serif;
       --mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
@@ -154,7 +154,7 @@
        HERO
     ========================================================== */
     .hero {
-      padding: 180px 0 120px;
+      padding: 180px 0 160px;
       position: relative;
     }
 
@@ -266,35 +266,6 @@
       transition: transform 0.2s ease;
     }
     .btn:hover .arrow { transform: translateX(2px); }
-
-    /* Hero side annotations */
-    .hero-stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 32px;
-      margin-top: 96px;
-      padding-top: 32px;
-      border-top: 1px solid var(--border);
-    }
-    .stat .stat-num {
-      font-family: var(--serif);
-      font-size: 36px;
-      font-weight: 400;
-      color: var(--text);
-      letter-spacing: -0.03em;
-    }
-    .stat .stat-num em { color: var(--accent); font-style: normal; }
-    .stat .stat-label {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--text-muted);
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      margin-top: 6px;
-    }
-    @media (max-width: 720px) {
-      .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 24px; }
-    }
 
     /* ==========================================================
        SECTION SCAFFOLDING
@@ -773,7 +744,6 @@
     .hero .hero-title { animation-delay: 0.15s; }
     .hero .hero-sub { animation-delay: 0.3s; }
     .hero .hero-cta { animation-delay: 0.45s; }
-    .hero .hero-stats { animation-delay: 0.6s; }
   </style>
 </head>
 <body>
@@ -804,12 +774,12 @@
       </div>
 
       <h1 class="hero-title">
-        Building <em>resilient</em> systems<br />
-        for <em>real</em> money <span class="ampersand">&amp;</span> millions of users.
+        <em>Quietly</em> building things<br />
+        that <em>scale</em>.
       </h1>
 
       <p class="hero-sub">
-        I'm <strong>Sagar Sinha</strong> — a senior engineer with <strong>7+ years</strong> shipping distributed systems in regulated FinTech, and an obsession with applied AI on the side. Currently working on Open Banking at Lloyds Banking Group, previously at JPMorgan Chase building blockchain settlement infrastructure.
+        I'm <strong>Sagar Sinha</strong> — a senior engineer with <strong>7+ years</strong> of experience shipping distributed systems in regulated FinTech, and an obsession with applied AI on the side. Currently working on Open Banking at Lloyds Banking Group, previously at JPMorgan Chase building blockchain settlement infrastructure.
       </p>
 
       <div class="hero-cta">
@@ -819,25 +789,6 @@
         <a href="/Sagar_Resume.pdf" class="btn btn-ghost" download>
           Download CV <span class="arrow">↓</span>
         </a>
-      </div>
-
-      <div class="hero-stats">
-        <div class="stat">
-          <div class="stat-num"><em>3.5M+</em></div>
-          <div class="stat-label">Users served</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num"><em>$1M+</em></div>
-          <div class="stat-label">Per transaction</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num"><em>50%</em></div>
-          <div class="stat-label">Faster deploys</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num"><em>7+</em></div>
-          <div class="stat-label">Years in FinTech</div>
-        </div>
       </div>
     </div>
   </header>
@@ -875,7 +826,7 @@
         <article class="timeline-item reveal">
           <div class="timeline-meta">
             <span class="duration">2019 — 2023</span>
-            <span>Hyderabad, IN</span>
+            <span>Bangalore, IN</span>
           </div>
           <div class="timeline-content">
             <h3>Software Engineer II</h3>
