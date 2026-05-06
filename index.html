@@ -19,29 +19,60 @@
   <style>
     /* ==========================================================
        DESIGN TOKENS
-       Aesthetic: warm editorial / mid-tone paper-and-ink
+       Aesthetic: warm editorial / paper-and-ink
        Inspiration: print magazines, Stripe Press, Robin Rendle
+       Light theme is default; dark theme via [data-theme="dark"]
     ========================================================== */
     :root {
-      --bg: #1f1d1a;           /* warm dark charcoal — base tone */
-      --bg-elev: #161412;      /* deeper tone for alternating sections — strong contrast */
-      --bg-card: #2f2c25;      /* card surfaces */
+      /* LIGHT THEME (default) — warm cream paper with deep ink */
+      --bg: #f5f0e6;           /* warm cream paper */
+      --bg-elev: #ebe4d4;      /* slightly deeper cream for alternating sections */
+      --bg-card: #fbf6ec;      /* lighter card surface, sits raised */
+      --border: #d8cfb9;
+      --border-strong: #b8ac90;
+      --text: #1f1d1a;         /* deep warm charcoal — readable but not pure black */
+      --text-muted: #6a6356;
+      --text-dim: #9a917f;
+      --accent: #a06a32;       /* deep sepia/amber — readable on cream */
+      --accent-soft: #b88040;
+      --accent-deep: #845529;
+      --signal: #4a7c5d;       /* deep sage */
+      --danger: #b13d3d;
+      --grid: rgba(31, 29, 26, 0.04);
+      --gradient-1: radial-gradient(circle at 20% 0%, rgba(160, 106, 50, 0.05), transparent 55%);
+      --gradient-2: radial-gradient(circle at 85% 35%, rgba(31, 29, 26, 0.02), transparent 65%);
+      --nav-backdrop: rgba(245, 240, 230, 0.78);
+      --pill-bg: rgba(31, 29, 26, 0.04);
+      --serif: 'Fraunces', 'Times New Roman', serif;
+      --sans: 'Geist', system-ui, -apple-system, sans-serif;
+      --mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+    }
+
+    [data-theme="dark"] {
+      --bg: #1f1d1a;
+      --bg-elev: #161412;
+      --bg-card: #2f2c25;
       --border: #3a372f;
       --border-strong: #4d493f;
-      --text: #f4ede0;         /* warm off-white, like aged paper */
+      --text: #f4ede0;
       --text-muted: #a8a092;
       --text-dim: #6e685b;
-      --accent: #d4a574;       /* warm tan/amber — sophisticated, not loud */
+      --accent: #d4a574;
       --accent-soft: #e8c89a;
       --accent-deep: #b8895a;
-      --signal: #8eb89a;       /* muted sage green */
+      --signal: #8eb89a;
       --danger: #e08989;
       --grid: rgba(255, 255, 255, 0.022);
       --gradient-1: radial-gradient(circle at 20% 0%, rgba(212, 165, 116, 0.05), transparent 55%);
       --gradient-2: radial-gradient(circle at 85% 35%, rgba(255, 255, 255, 0.025), transparent 65%);
-      --serif: 'Fraunces', 'Times New Roman', serif;
-      --sans: 'Geist', system-ui, -apple-system, sans-serif;
-      --mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+      --nav-backdrop: rgba(31, 29, 26, 0.75);
+      --pill-bg: rgba(255, 255, 255, 0.03);
+    }
+
+    /* Smooth transition when toggling */
+    html, body, nav, section, .skill-cell, .contact-link, .about-card, .project-card,
+    .timeline-item, .tech-tag, .skill-pill, .available-badge, .interest-icon, .btn {
+      transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -101,7 +132,7 @@
       padding: 20px 0;
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      background: rgba(31, 29, 26, 0.75);
+      background: var(--nav-backdrop);
       border-bottom: 1px solid var(--border);
     }
     nav .container {
@@ -145,6 +176,42 @@
       letter-spacing: 0.02em;
     }
     .nav-links a:hover { color: var(--text); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .theme-toggle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--border-strong);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+    .theme-toggle:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: var(--pill-bg);
+    }
+    .theme-icon {
+      width: 14px;
+      height: 14px;
+      display: none;
+    }
+    /* Default (light theme): show moon (offering to go dark) */
+    .icon-moon { display: block; }
+    /* Dark theme: show sun (offering to go light) */
+    [data-theme="dark"] .icon-moon { display: none; }
+    [data-theme="dark"] .icon-sun { display: block; }
 
     @media (max-width: 520px) {
       .nav-links { display: none; }
@@ -484,6 +551,14 @@
     }
     .arch-node:hover { filter: brightness(1.3); }
 
+    /* Theme-aware SVG styles */
+    .arch-ring { stroke: var(--border); }
+    .arch-line { stroke: var(--accent); opacity: 0.55; }
+    .arch-circle { fill: var(--bg-card); stroke: var(--border-strong); }
+    .arch-text { fill: var(--text-muted); }
+    .arch-text-dim { fill: var(--text-dim); }
+    .arch-text-accent { fill: var(--accent); }
+
     @keyframes flow {
       0% { stroke-dashoffset: 20; }
       100% { stroke-dashoffset: 0; }
@@ -528,7 +603,7 @@
       font-family: var(--mono);
       font-size: 12px;
       padding: 5px 11px;
-      background: rgba(255, 255, 255, 0.03);
+      background: var(--pill-bg);
       border: 1px solid var(--border-strong);
       border-radius: 4px;
       color: var(--text);
@@ -745,6 +820,19 @@
     .hero .hero-sub { animation-delay: 0.3s; }
     .hero .hero-cta { animation-delay: 0.45s; }
   </style>
+
+  <!-- Apply saved theme before render to prevent flash. Default: light -->
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('theme');
+        if (saved === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+        // No saved preference or 'light' → leave default (light)
+      } catch (e) { /* localStorage may be blocked; default to light */ }
+    })();
+  </script>
 </head>
 <body>
 
@@ -752,13 +840,27 @@
   <nav>
     <div class="container">
       <a href="#" class="logo"><span class="logo-dot"></span>sagar.sinha</a>
-      <ul class="nav-links">
-        <li><a href="#work">work</a></li>
-        <li><a href="#project">project</a></li>
-        <li><a href="#skills">skills</a></li>
-        <li><a href="#about">about</a></li>
-        <li><a href="#contact">contact</a></li>
-      </ul>
+      <div class="nav-right">
+        <ul class="nav-links">
+          <li><a href="#work">work</a></li>
+          <li><a href="#project">project</a></li>
+          <li><a href="#skills">skills</a></li>
+          <li><a href="#about">about</a></li>
+          <li><a href="#contact">contact</a></li>
+        </ul>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+          <svg class="theme-icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2"/><path d="M12 20v2"/>
+            <path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/>
+            <path d="M2 12h2"/><path d="M20 12h2"/>
+            <path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>
+          </svg>
+          <svg class="theme-icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+          </svg>
+        </button>
+      </div>
     </div>
   </nav>
 
@@ -786,7 +888,7 @@
         <a href="#contact" class="btn btn-primary">
           Get in touch <span class="arrow">→</span>
         </a>
-        <a href="/Sagar_Resume.pdf" class="btn btn-ghost" download>
+        <a href="/Sagar_Resume_Improved.pdf" class="btn btn-ghost" download>
           Download CV <span class="arrow">↓</span>
         </a>
       </div>
@@ -903,11 +1005,11 @@
               </defs>
 
               <!-- Background grid circle -->
-              <circle cx="180" cy="180" r="160" fill="none" stroke="#38352e" stroke-width="1" stroke-dasharray="2 4"/>
-              <circle cx="180" cy="180" r="100" fill="none" stroke="#38352e" stroke-width="1" stroke-dasharray="2 4"/>
+              <circle cx="180" cy="180" r="160" fill="none" class="arch-ring" stroke-width="1" stroke-dasharray="2 4"/>
+              <circle cx="180" cy="180" r="100" fill="none" class="arch-ring" stroke-width="1" stroke-dasharray="2 4"/>
 
               <!-- Connection lines -->
-              <g stroke="#d4a574" stroke-width="1" fill="none" opacity="0.55" stroke-dasharray="4 4" style="animation: flow 1s linear infinite;">
+              <g class="arch-line" stroke-width="1" fill="none" stroke-dasharray="4 4" style="animation: flow 1s linear infinite;">
                 <line x1="80" y1="180" x2="155" y2="180"/>
                 <line x1="180" y1="105" x2="180" y2="155"/>
                 <line x1="180" y1="205" x2="180" y2="255"/>
@@ -916,19 +1018,19 @@
 
               <!-- User node -->
               <g class="arch-node">
-                <circle cx="55" cy="180" r="28" fill="#2b2924" stroke="#4a463d" stroke-width="1"/>
-                <text x="55" y="178" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#a8a092">USER</text>
-                <text x="55" y="190" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#6e685b">audio</text>
+                <circle cx="55" cy="180" r="28" class="arch-circle" stroke-width="1"/>
+                <text x="55" y="178" text-anchor="middle" font-family="JetBrains Mono" font-size="9" class="arch-text">USER</text>
+                <text x="55" y="190" text-anchor="middle" font-family="JetBrains Mono" font-size="8" class="arch-text-dim">audio</text>
               </g>
 
               <!-- STT node -->
               <g class="arch-node">
-                <circle cx="180" cy="80" r="28" fill="#2b2924" stroke="#4a463d" stroke-width="1"/>
-                <text x="180" y="76" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#d4a574">STT</text>
-                <text x="180" y="88" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#6e685b">deepgram</text>
+                <circle cx="180" cy="80" r="28" class="arch-circle" stroke-width="1"/>
+                <text x="180" y="76" text-anchor="middle" font-family="JetBrains Mono" font-size="9" class="arch-text-accent">STT</text>
+                <text x="180" y="88" text-anchor="middle" font-family="JetBrains Mono" font-size="8" class="arch-text-dim">deepgram</text>
               </g>
 
-              <!-- LLM core -->
+              <!-- LLM core (gold in both themes; text stays dark always) -->
               <g class="arch-node" filter="url(#glow)">
                 <circle cx="180" cy="180" r="38" fill="url(#goldGrad)" stroke="#d4a574" stroke-width="1.5"/>
                 <text x="180" y="178" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#1f1d1a" font-weight="600">LLM</text>
@@ -937,20 +1039,20 @@
 
               <!-- TTS node -->
               <g class="arch-node">
-                <circle cx="180" cy="280" r="28" fill="#2b2924" stroke="#4a463d" stroke-width="1"/>
-                <text x="180" y="278" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#d4a574">TTS</text>
-                <text x="180" y="290" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#6e685b">cartesia</text>
+                <circle cx="180" cy="280" r="28" class="arch-circle" stroke-width="1"/>
+                <text x="180" y="278" text-anchor="middle" font-family="JetBrains Mono" font-size="9" class="arch-text-accent">TTS</text>
+                <text x="180" y="290" text-anchor="middle" font-family="JetBrains Mono" font-size="8" class="arch-text-dim">cartesia</text>
               </g>
 
               <!-- Response node -->
               <g class="arch-node">
-                <circle cx="305" cy="180" r="28" fill="#2b2924" stroke="#4a463d" stroke-width="1"/>
-                <text x="305" y="178" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#a8a092">VOICE</text>
-                <text x="305" y="190" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#6e685b">&lt; 800ms</text>
+                <circle cx="305" cy="180" r="28" class="arch-circle" stroke-width="1"/>
+                <text x="305" y="178" text-anchor="middle" font-family="JetBrains Mono" font-size="9" class="arch-text">VOICE</text>
+                <text x="305" y="190" text-anchor="middle" font-family="JetBrains Mono" font-size="8" class="arch-text-dim">&lt; 800ms</text>
               </g>
 
               <!-- Latency label -->
-              <text x="180" y="340" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#6e685b">e2e voice pipeline</text>
+              <text x="180" y="340" text-anchor="middle" font-family="JetBrains Mono" font-size="10" class="arch-text-dim">e2e voice pipeline</text>
             </svg>
           </div>
         </div>
@@ -1174,6 +1276,21 @@
         }
       });
     });
+
+    // Theme toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        if (next === 'light') {
+          document.documentElement.removeAttribute('data-theme');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+        try { localStorage.setItem('theme', next); } catch (e) {}
+      });
+    }
   </script>
 </body>
 </html>
